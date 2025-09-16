@@ -1,0 +1,47 @@
+BROKER SCHEMA com.cedge.yes.neft.out
+
+
+CREATE COMPUTE MODULE YES_NEFT_OUTWARD_FILEREPROCESS
+	DECLARE LogPath EXTERNAL CHARACTER;
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		--- Line 8-16 to 21-24 added for migration purpose
+			DECLARE rc BOOLEAN;
+			--CALL initLog4j('/var/iib/interface/yes/neft/inward/properties/log4j/yes_neft_rgts_log4j.xml') INTO rc;
+			CALL initLog4j(LogPath) INTO rc;
+			CALL log4j_1_1('REPROCESS', 'YES_NEFT_OUTWARD_GATEWAY', 'WARN','-------------------------------------REPROCESS START-------------------------------------') INTO rc;
+			CALL log4j_1_1('REPROCESS', 'YES_NEFT_OUTWARD_GATEWAY', 'WARN','Transaction number : '||InputRoot.DFDL.Generic_Message.Header.MUR) INTO rc;
+			CALL log4j_1_1('REPROCESS', 'YES_NEFT_OUTWARD_GATEWAY', 'WARN','Message Type is : '||InputRoot.DFDL.Generic_Message.Header.SUBMESSAGETYPE) INTO rc;	
+	--MQ--	CALL log4j_1_1('REPROCESS', 'YES_NEFT_OUTWARD_GATEWAY', 'WARN','File Name : '||InputLocalEnvironment.File.Name) INTO rc;
+			CALL log4j_1_1('REPROCESS', 'YES_NEFT_OUTWARD_GATEWAY', 'WARN','File Name : '||InputRoot.MQRFH2.usr.UFM_FileName) INTO rc;
+			
+		 	CALL CopyMessageHeaders();
+			CALL CopyEntireMessage();
+			
+			DECLARE ExcRef REFERENCE TO InputExceptionList.*;
+				IF NOT LASTMOVE(ExcRef) THEN
+					CALL log4j_1_1('REPROCESS', 'YES_NEFT_OUTWARD_GATEWAY', 'WARN','--------------------------------------REPROCESS END--------------------------------------') INTO rc;	
+				END IF;
+	
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+	
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+		SET OutputRoot.MQRFH2.usr.filename = InputRoot.MQRFH2.usr.UFM_FileName;
+		SET Environment.filename = InputRoot.MQRFH2.usr.filename;
+	END;
+	
+	
+END MODULE;

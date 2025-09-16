@@ -1,0 +1,56 @@
+BROKER SCHEMA com.cedge.yes.neft.out
+
+CREATE COMPUTE MODULE NEFT_OUTWARD_GATEWAY
+	DECLARE LogPath EXTERNAL CHARACTER;
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE rc BOOLEAN;
+		
+		CALL initLog4j(LogPath) INTO rc;
+		
+		--- Line 12-13 added for migration purpose
+		CALL log4j_1_1('ADD_MQRFH', 'YES_NEFT_OUTWARD_GATEWAY', 'WARN','-------------------------------------START-------------------------------------') INTO rc;
+		CALL log4j_1_1('ADD_MQRFH', 'YES_NEFT_OUTWARD_GATEWAY', 'WARN','File received from CBS ') INTO rc;
+		CALL log4j_1_1('ADD_MQRFH', 'YES_NEFT_OUTWARD_GATEWAY', 'WARN','Transaction number : '||InputRoot.DFDL.Generic_Message.Header.MUR) INTO rc;
+ 		CALL log4j_1_1('ADD_MQRFH', 'YES_NEFT_OUTWARD_GATEWAY', 'WARN','Message Type is : '||InputRoot.DFDL.Generic_Message.Header.SUBMESSAGETYPE) INTO rc;	
+----MQ--	CALL log4j_1_1('ADD_MQRFH', 'YES_NEFT_OUTWARD_GATEWAY', 'WARN','File Name : '||InputLocalEnvironment.File.Name) INTO rc;
+		CALL log4j_1_1('ADD_MQRFH', 'YES_NEFT_OUTWARD_GATEWAY', 'WARN','File Name : '||InputRoot.MQRFH2.usr.UFM_FileName) INTO rc;
+		
+		CALL CopyMessageHeaders();
+		CALL CopyEntireMessage();
+		
+		DECLARE ExcRef REFERENCE TO InputExceptionList.*;
+		IF NOT LASTMOVE(ExcRef) THEN
+			CALL log4j_1_1('ADD_MQRFH', 'YES_NEFT_OUTWARD_GATEWAY', 'WARN','--------------------------------------END--------------------------------------') INTO rc;	
+		END IF;
+			
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+	
+--MQ--	SET OutputRoot.Properties = InputRoot.Properties;
+--MQ--	CREATE NEXTSIBLING OF "OutputRoot"."Properties" DOMAIN 'MQMD' NAME 'MQMD';
+--MQ--	SET OutputRoot.MQMD.Format = 'MQHRF2';
+--MQ--	CREATE NEXTSIBLING OF "OutputRoot"."MQMD" DOMAIN 'MQRFH2' NAME 'MQRFH2';
+--MQ--	SET OutputRoot.MQRFH2.(MQRFH2.Field)Version = 2;
+--MQ--	SET OutputRoot.MQRFH2.(MQRFH2.Field)Format = 'MQSTR';
+--MQ--	SET OutputRoot.MQRFH2.(MQRFH2.Field)NameValueCCSID = 1208;
+		
+		
+--MQ--	SET OutputRoot.MQRFH2.usr.filename = InputLocalEnvironment.File.Name;
+		SET OutputRoot.MQRFH2.usr.filename = InputRoot.MQRFH2.usr.UFM_FileName;
+		SET Environment.msgType = InputRoot.DFDL.*.Header.SUBMESSAGETYPE;
+		SET OutputRoot.DFDL = InputRoot.DFDL;
+	END;
+END MODULE;

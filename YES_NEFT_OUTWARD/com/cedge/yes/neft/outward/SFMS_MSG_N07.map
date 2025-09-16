@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="com.cedge.yes.neft.outward" version="8.0.4.0" xmlns:map="com.cedge.yes.neft.outward">
+    <input path="/N06/OUTWARD.xsd"/>
+    <output path="/N06/OUTWARD.xsd"/>
+    <generation engine="xquery"/>
+    <mappingDeclaration name="SFMS_MSG_N07">
+        <input path="mb:msg(N07,assembly,DFDL,Properties)"/>
+        <output path="mb:msg(SFMS_N07,assembly,DFDL,Properties)"/>
+        <move>
+            <input path="Properties"/>
+            <output path="Properties"/>
+            <override>
+                <assign value="{}:SFMS_N07">
+                    <output path="Properties/MessageType"/>
+                </assign>
+            </override>
+        </move>
+        <move>
+            <input path="N07/Header/BLOCKIDENTIFIER"/>
+            <output path="SFMS_N07/Header/BLOCKIDENTIFIER"/>
+        </move>
+        <move>
+            <input path="N07/Header/BANKAPPLICATIONIDENTIFIER"/>
+            <output path="SFMS_N07/Header/BANKAPPLICATIONIDENTIFIER"/>
+        </move>
+        <move>
+            <input path="N07/Header/MESSAGEIDENTIFIER"/>
+            <output path="SFMS_N07/Header/MESSAGEIDENTIFIER"/>
+        </move>
+        <move>
+            <input path="N07/Header/INPUTOUTPUTIDENTIFIER"/>
+            <output path="SFMS_N07/Header/INPUTOUTPUTIDENTIFIER"/>
+        </move>
+        <move>
+            <input path="N07/Header/MESSAGETYPE"/>
+            <output path="SFMS_N07/Header/MESSAGETYPE"/>
+        </move>
+        <move>
+            <input path="N07/Header/SUBMESSAGETYPE"/>
+            <output path="SFMS_N07/Header/SUBMESSAGETYPE"/>
+        </move>
+        <move>
+            <input path="N07/Header/SENDERADDRESS"/>
+            <output path="SFMS_N07/Header/SENDERADDRESS"/>
+        </move>
+        <move>
+            <input path="N07/Header/RECEIVERADDRESS"/>
+            <output path="SFMS_N07/Header/RECEIVERADDRESS"/>
+        </move>
+        <move>
+            <input path="N07/Header/DELIVERYMONITORINGFLAG"/>
+            <output path="SFMS_N07/Header/DELIVERYMONITORINGFLAG"/>
+        </move>
+        <move>
+            <input path="N07/Header/OPENNOTIFICATIONFLAG"/>
+            <output path="SFMS_N07/Header/OPENNOTIFICATIONFLAG"/>
+        </move>
+        <move>
+            <input path="N07/Header/NONDELIVERYFLAG"/>
+            <output path="SFMS_N07/Header/NONDELIVERYFLAG"/>
+        </move>
+        <move>
+            <input path="N07/Header/OBSOLENCEPERIOD"/>
+            <output path="SFMS_N07/Header/OBSOLENCEPERIOD"/>
+        </move>
+        <move>
+            <input path="N07/Header/MUR"/>
+            <output path="SFMS_N07/Header/MUR"/>
+        </move>
+        <move>
+            <input path="N07/Header/POSSIBLEDUPLICATEFLAG"/>
+            <output path="SFMS_N07/Header/POSSIBLEDUPLICATEFLAG"/>
+        </move>
+        <move>
+            <input path="N07/Header/SERVICEIDENTIFIER"/>
+            <output path="SFMS_N07/Header/SERVICEIDENTIFIER"/>
+        </move>
+        <move>
+            <input path="N07/Header/ORIGINATINGDATE"/>
+            <output path="SFMS_N07/Header/ORIGINATINGDATE"/>
+        </move>
+        <move>
+            <input path="N07/Header/ORIGINATINGTIME"/>
+            <output path="SFMS_N07/Header/ORIGINATINGTIME"/>
+        </move>
+        <move>
+            <input path="N07/Header/TESTINGANDTRAININGFLAG"/>
+            <output path="SFMS_N07/Header/TESTINGANDTRAININGFLAG"/>
+        </move>
+        <move>
+            <input path="N07/Header/SEQUENCENUMBER"/>
+            <output path="SFMS_N07/Header/SEQUENCENUMBER"/>
+        </move>
+        <move>
+            <input path="N07/Header/FILLER"/>
+            <output path="SFMS_N07/Header/FILLER"/>
+        </move>
+        <move>
+            <input path="N07/Header/UNIQUETRANSACTIONREF"/>
+            <output path="SFMS_N07/Header/UNIQUETRANSACTIONREF"/>
+        </move>
+        <move>
+            <input path="N07/Header/RTGSPRIORITY"/>
+            <output path="SFMS_N07/Header/RTGSPRIORITY"/>
+        </move>
+        <move>
+            <input path="N07/Header/BLOCKEND"/>
+            <output path="SFMS_N07/Header/BLOCKEND"/>
+        </move>
+        <move>
+            <input path="N07/Body/TRANSACTIONREFERENCENUMBER"/>
+            <output path="SFMS_N07/Body/TRANSACTIONREFERENCENUMBER"/>
+        </move>
+        <move>
+            <input path="N07/Body/BATCHTIME"/>
+            <output path="SFMS_N07/Body/BATCHTIME"/>
+        </move>
+        <move>
+            <input path="N07/Body/TOTALNUMBEROFMESSAGES"/>
+            <output path="SFMS_N07/Body/TOTALNUMBEROFMESSAGES"/>
+        </move>
+        <move>
+            <input path="N07/Body/SUMOFAMOUNTS"/>
+            <output path="SFMS_N07/Body/SUMOFAMOUNTS"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/TRANSACTIONREFERENCENUMBER"/>
+            <output path="SFMS_N07/Body/record/TRANSACTIONREFERENCENUMBER"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/RELATED_REFERENCE_NUMBER"/>
+            <output path="SFMS_N07/Body/record/RELATED_REFERENCE_NUMBER"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/AMOUNT"/>
+            <output path="SFMS_N07/Body/record/AMOUNT"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/VALUEDATE"/>
+            <output path="SFMS_N07/Body/record/VALUEDATE"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/SENDINGBRANCHIFSC"/>
+            <output path="SFMS_N07/Body/record/SENDINGBRANCHIFSC"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/SENDINGCUSTOMERACCOUNTTYPE"/>
+            <output path="SFMS_N07/Body/record/SENDINGCUSTOMERACCOUNTTYPE"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/SENDINGCUSTOMERACCOUNTNUMBER"/>
+            <output path="SFMS_N07/Body/record/SENDINGCUSTOMERACCOUNTNUMBER"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/SEDINGCUSTOMERACCOUNTNAME"/>
+            <output path="SFMS_N07/Body/record/SEDINGCUSTOMERACCOUNTNAME"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/SENDINGCUSTOMERMOBILE_EMAILID/EML_SMS"/>
+            <output path="SFMS_N07/Body/record/SENDINGCUSTOMERMOBILE_EMAILID/EML_SMS"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/SENDINGCUSTOMERMOBILE_EMAILID/VALUE"/>
+            <output path="SFMS_N07/Body/record/SENDINGCUSTOMERMOBILE_EMAILID/VALUE"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/ORIGINATOROFREMITTANCE/LINE1"/>
+            <output path="SFMS_N07/Body/record/ORIGINATOROFREMITTANCE/LINE1"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/ORIGINATOROFREMITTANCE/LINE2"/>
+            <output path="SFMS_N07/Body/record/ORIGINATOROFREMITTANCE/LINE2"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/ORIGINATOROFREMITTANCE/LINE3"/>
+            <output path="SFMS_N07/Body/record/ORIGINATOROFREMITTANCE/LINE3"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/ORIGINATOROFREMITTANCE/LINE4"/>
+            <output path="SFMS_N07/Body/record/ORIGINATOROFREMITTANCE/LINE4"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/BENEFICIARYBRANCHSIFSC"/>
+            <output path="SFMS_N07/Body/record/BENEFICIARYBRANCHSIFSC"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/BENEFICIARYCUSTOMERACTYPE"/>
+            <output path="SFMS_N07/Body/record/BENEFICIARYCUSTOMERACTYPE"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/BENEFICIARYCUSTOMERACNUMBER"/>
+            <output path="SFMS_N07/Body/record/BENEFICIARYCUSTOMERACNUMBER"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/BENEFICIARYCUSTOMERACNAME"/>
+            <output path="SFMS_N07/Body/record/BENEFICIARYCUSTOMERACNAME"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/BENEFICIARYCUSTOMERADDRESS/LINE1"/>
+            <output path="SFMS_N07/Body/record/BENEFICIARYCUSTOMERADDRESS/LINE1"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/BENEFICIARYCUSTOMERADDRESS/LINE2"/>
+            <output path="SFMS_N07/Body/record/BENEFICIARYCUSTOMERADDRESS/LINE2"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/BENEFICIARYCUSTOMERADDRESS/LINE3"/>
+            <output path="SFMS_N07/Body/record/BENEFICIARYCUSTOMERADDRESS/LINE3"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/BENEFICIARYCUSTOMERADDRESS/LINE4"/>
+            <output path="SFMS_N07/Body/record/BENEFICIARYCUSTOMERADDRESS/LINE4"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/REASON_CODE"/>
+            <output path="SFMS_N07/Body/record/REASON_CODE"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/REJECTION_CODE"/>
+            <output path="SFMS_N07/Body/record/REJECTION_CODE"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/SENDERTIRECEIVERINFORMATION/LINE1"/>
+            <output path="SFMS_N07/Body/record/SENDERTIRECEIVERINFORMATION/LINE1"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/SENDERTIRECEIVERINFORMATION/LINE2"/>
+            <output path="SFMS_N07/Body/record/SENDERTIRECEIVERINFORMATION/LINE2"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/SENDERTIRECEIVERINFORMATION/LINE3"/>
+            <output path="SFMS_N07/Body/record/SENDERTIRECEIVERINFORMATION/LINE3"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/SENDERTIRECEIVERINFORMATION/LINE4"/>
+            <output path="SFMS_N07/Body/record/SENDERTIRECEIVERINFORMATION/LINE4"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/SENDERTIRECEIVERINFORMATION/LINE5"/>
+            <output path="SFMS_N07/Body/record/SENDERTIRECEIVERINFORMATION/LINE5"/>
+        </move>
+        <move>
+            <input path="N07/Body/record/SENDERTIRECEIVERINFORMATION/LINE6"/>
+            <output path="SFMS_N07/Body/record/SENDERTIRECEIVERINFORMATION/LINE6"/>
+        </move>
+    </mappingDeclaration>
+</mappingRoot>

@@ -1,0 +1,67 @@
+BROKER SCHEMA com.cedge.yes.neft.out
+
+
+CREATE COMPUTE MODULE YES_NEFT_OUTWARD_SFTP_FILE
+	
+	DECLARE PROP_LOC EXTERNAL CHARACTER;
+	
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		 CALL CopyMessageHeaders();
+		 CALL CopyEntireMessage();
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+		
+		DECLARE rc BOOLEAN;
+		CALL log4j_1_1('SFTP_FILE_FORMATE', 'YES_NEFT_OUTWARD', 'WARN','.Done file successfully writen to CBS') INTO rc;
+		DECLARE fileName, sftpfileName, bankName, msgType, seqNumber, key CHARACTER;
+		SET msgType = TRIM(Environment.msgtype);
+		SET bankName = TRIM(Environment.bankName);
+		SET seqNumber = TRIM(Environment.seqHeader);
+		DECLARE cTime CHARACTER CAST(CURRENT_TIMESTAMP AS CHARACTER FORMAT 'ddMMyyyy');
+		
+		SET sftpfileName = 'YES'||bankName||cTime||seqNumber||msgType||'.txt';
+		SET Environment.sftpfileName = sftpfileName;
+		
+		IF msgType = 'N06' THEN
+			SET key = bankName||'_SFTP_OUT_N06';
+		ELSEIF msgType = 'N07' THEN
+			SET key = bankName||'_SFTP_OUT_N07';
+		ELSEIF msgType = 'N10' THEN
+			SET key = bankName||'_SFTP_OUT_N10';
+		END IF;
+		
+		DECLARE fileLoc, sftpProvider CHARACTER;
+		
+		CALL getProp(PROP_LOC, key, bankName, fileLoc, sftpProvider);
+	
+		SET OutputLocalEnvironment.Destination.File.Name = sftpfileName;
+--MQ--	SET OutputLocalEnvironment.Destination.File.Remote.ServerDirectory = fileLoc;
+--MQ--	SET OutputLocalEnvironment.Destination.File.Remote.Server = sftpProvider;
+		SET OutputLocalEnvironment.Destination.File.Directory = fileLoc;
+		
+		CALL log4j_1_1('SFTP_FILE_FORMATE', 'YES_NEFT_OUTWARD', 'WARN','SFTP file name: ' || sftpfileName) INTO rc;
+		CALL log4j_1_1('SFTP_FILE_FORMATE', 'YES_NEFT_OUTWARD', 'WARN','SFTP Provider name : '||sftpProvider) INTO rc;
+		CALL log4j_1_1('SFTP_FILE_FORMATE', 'YES_NEFT_OUTWARD', 'WARN','SFTP Server directory : '||fileLoc) INTO rc;
+	
+		
+	END;
+	
+	CREATE PROCEDURE getProp (IN P1 CHARACTER, IN P2 CHARACTER, IN P3 CHARACTER, INOUT P4 CHARACTER, INOUT P5 CHARACTER )
+	LANGUAGE JAVA
+	EXTERNAL NAME "com.cedge.properties.YES_NEFT_OUTWARD_PROPERTIES.getsftpProperties";
+END MODULE;
+
