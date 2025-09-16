@@ -1,0 +1,46 @@
+
+CREATE COMPUTE MODULE Json_2_Xml_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+BEGIN
+  
+    -- Parse the JSON input
+    DECLARE headerData REFERENCE TO InputRoot.JSON.Data.Order.header;
+    DECLARE detailsData REFERENCE TO InputRoot.JSON.Data.Order.details;
+
+    -- Initialize detailItem to the first child of details array
+    DECLARE detailItem REFERENCE TO detailsData;
+    MOVE detailItem FIRSTCHILD;
+
+    DECLARE index INT 1;
+
+    WHILE LASTMOVE(detailItem) DO
+        -- Build the XML structure for the current file
+        CREATE LASTCHILD OF OutputRoot DOMAIN('XMLNSC') NAME 'Order';
+        SET OutputRoot.XMLNSC.Order.header.ID = headerData.ID;
+        SET OutputRoot.XMLNSC.Order.header.partNumber = headerData.partNumber;
+        SET OutputRoot.XMLNSC.Order.header.issueDate = headerData.issueDate;
+        SET OutputRoot.XMLNSC.Order.header.quantity = headerData.quantity;
+        SET OutputRoot.XMLNSC.Order.header.inventoryStatus = headerData.inventoryStatus;
+        SET OutputRoot.XMLNSC.Order.header.OrderType = headerData.OrderType;
+
+        SET OutputRoot.XMLNSC.Order.details.OrderNumber = detailItem.OrderNumber;
+        SET OutputRoot.XMLNSC.Order.details.componentInventoryStatus = detailItem.componentInventoryStatus;
+        SET OutputRoot.XMLNSC.Order.details.quantityPerAssembly = detailItem.quantityPerAssembly;
+        SET OutputRoot.XMLNSC.Order.details.BOMQuantity = detailItem.BOMQuantity;
+
+        -- Set the filename dynamically for each XML file
+        SET OutputLocalEnvironment.Destination.File.Name = 'File' || CAST(index AS CHAR) || '.xml';
+
+        -- Propagate the message for the current detail
+        PROPAGATE;
+
+        -- Move to the next detail
+        MOVE detailItem NEXTSIBLING;
+        SET index = index + 1;
+    END WHILE;
+
+    RETURN FALSE; -- Stop further propagation
+END;
+
+
+END MODULE;
