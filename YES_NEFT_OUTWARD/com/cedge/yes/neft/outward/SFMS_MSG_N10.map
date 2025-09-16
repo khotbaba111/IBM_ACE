@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="com.cedge.yes.neft.outward" version="8.0.4.0" xmlns:map="com.cedge.yes.neft.outward">
+    <input path="/N06/OUTWARD.xsd"/>
+    <output path="/N06/OUTWARD.xsd"/>
+    <generation engine="xquery"/>
+    <mappingDeclaration name="SFMS_MSG_N10">
+        <input path="mb:msg(N10,assembly,DFDL,Properties)"/>
+        <output path="mb:msg(SFMS_N10,assembly,DFDL,Properties)"/>
+        <move>
+            <input path="Properties"/>
+            <output path="Properties"/>
+            <override>
+                <assign value="{}:SFMS_N10">
+                    <output path="Properties/MessageType"/>
+                </assign>
+            </override>
+        </move>
+        <move>
+            <input path="N10/Header/BLOCKIDENTIFIER"/>
+            <output path="SFMS_N10/Header/BLOCKIDENTIFIER"/>
+        </move>
+        <move>
+            <input path="N10/Header/BANKAPPLICATIONIDENTIFIER"/>
+            <output path="SFMS_N10/Header/BANKAPPLICATIONIDENTIFIER"/>
+        </move>
+        <move>
+            <input path="N10/Header/MESSAGEIDENTIFIER"/>
+            <output path="SFMS_N10/Header/MESSAGEIDENTIFIER"/>
+        </move>
+        <move>
+            <input path="N10/Header/INPUTOUTPUTIDENTIFIER"/>
+            <output path="SFMS_N10/Header/INPUTOUTPUTIDENTIFIER"/>
+        </move>
+        <move>
+            <input path="N10/Header/MESSAGETYPE"/>
+            <output path="SFMS_N10/Header/MESSAGETYPE"/>
+        </move>
+        <move>
+            <input path="N10/Header/SUBMESSAGETYPE"/>
+            <output path="SFMS_N10/Header/SUBMESSAGETYPE"/>
+        </move>
+        <move>
+            <input path="N10/Header/SENDERADDRESS"/>
+            <output path="SFMS_N10/Header/SENDERADDRESS"/>
+        </move>
+        <move>
+            <input path="N10/Header/RECEIVERADDRESS"/>
+            <output path="SFMS_N10/Header/RECEIVERADDRESS"/>
+        </move>
+        <move>
+            <input path="N10/Header/DELIVERYMONITORINGFLAG"/>
+            <output path="SFMS_N10/Header/DELIVERYMONITORINGFLAG"/>
+        </move>
+        <move>
+            <input path="N10/Header/OPENNOTIFICATIONFLAG"/>
+            <output path="SFMS_N10/Header/OPENNOTIFICATIONFLAG"/>
+        </move>
+        <move>
+            <input path="N10/Header/NONDELIVERYFLAG"/>
+            <output path="SFMS_N10/Header/NONDELIVERYFLAG"/>
+        </move>
+        <move>
+            <input path="N10/Header/OBSOLENCEPERIOD"/>
+            <output path="SFMS_N10/Header/OBSOLENCEPERIOD"/>
+        </move>
+        <move>
+            <input path="N10/Header/MUR"/>
+            <output path="SFMS_N10/Header/MUR"/>
+        </move>
+        <move>
+            <input path="N10/Header/POSSIBLEDUPLICATEFLAG"/>
+            <output path="SFMS_N10/Header/POSSIBLEDUPLICATEFLAG"/>
+        </move>
+        <move>
+            <input path="N10/Header/SERVICEIDENTIFIER"/>
+            <output path="SFMS_N10/Header/SERVICEIDENTIFIER"/>
+        </move>
+        <move>
+            <input path="N10/Header/ORIGINATINGDATE"/>
+            <output path="SFMS_N10/Header/ORIGINATINGDATE"/>
+        </move>
+        <move>
+            <input path="N10/Header/ORIGINATINGTIME"/>
+            <output path="SFMS_N10/Header/ORIGINATINGTIME"/>
+        </move>
+        <move>
+            <input path="N10/Header/TESTINGANDTRAININGFLAG"/>
+            <output path="SFMS_N10/Header/TESTINGANDTRAININGFLAG"/>
+        </move>
+        <move>
+            <input path="N10/Header/SEQUENCENUMBER"/>
+            <output path="SFMS_N10/Header/SEQUENCENUMBER"/>
+        </move>
+        <move>
+            <input path="N10/Header/FILLER"/>
+            <output path="SFMS_N10/Header/FILLER"/>
+        </move>
+        <move>
+            <input path="N10/Header/UNIQUETRANSACTIONREF"/>
+            <output path="SFMS_N10/Header/UNIQUETRANSACTIONREF"/>
+        </move>
+        <move>
+            <input path="N10/Header/RTGSPRIORITY"/>
+            <output path="SFMS_N10/Header/RTGSPRIORITY"/>
+        </move>
+        <move>
+            <input path="N10/Header/BLOCKEND"/>
+            <output path="SFMS_N10/Header/BLOCKEND"/>
+        </move>
+        <move>
+            <input path="N10/Body/TRANSACTIONREFERENCENUMBER"/>
+            <output path="SFMS_N10/Body/TRANSACTIONREFERENCENUMBER"/>
+        </move>
+        <move>
+            <input path="N10/Body/record/TRANSACTONREFERENCENUMBER"/>
+            <output path="SFMS_N10/Body/record/TRANSACTONREFERENCENUMBER"/>
+        </move>
+        <move>
+            <input path="N10/Body/record/IFSC_OF_ORIGINATOR_OF_REMITTANCE"/>
+            <output path="SFMS_N10/Body/record/IFSC_OF_ORIGINATOR_OF_REMITTANCE"/>
+        </move>
+        <move>
+            <input path="N10/Body/record/RELATED_REFERENCE"/>
+            <output path="SFMS_N10/Body/record/RELATED_REFERENCE"/>
+        </move>
+        <move>
+            <input path="N10/Body/record/AMT_CREDITED/LINE1"/>
+            <output path="SFMS_N10/Body/record/AMT_CREDITED/LINE1"/>
+        </move>
+        <move>
+            <input path="N10/Body/record/AMT_CREDITED/LINE2"/>
+            <output path="SFMS_N10/Body/record/AMT_CREDITED/LINE2"/>
+        </move>
+    </mappingDeclaration>
+</mappingRoot>

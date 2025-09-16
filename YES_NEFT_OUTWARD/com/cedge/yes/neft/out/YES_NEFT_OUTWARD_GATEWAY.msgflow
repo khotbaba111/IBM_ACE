@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmMQInput.msgnode="ComIbmMQInput.msgnode" xmlns:ComIbmMQOutput.msgnode="ComIbmMQOutput.msgnode" xmlns:com_yes_neft_out_exception_EXCEPTION_HANDLING_SUBFLOW.subflow="com/yes/neft/out/exception/EXCEPTION_HANDLING_SUBFLOW.subflow" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility"
+    nsURI="com/cedge/yes/neft/out/YES_NEFT_OUTWARD_GATEWAY.msgflow" nsPrefix="com_cedge_yes_neft_out_YES_NEFT_OUTWARD_GATEWAY.msgflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.LogPath" name="LogPath" defaultValueLiteral="/var/iib/interface/yes/neft/inward/properties/log4j/yes_neft_rgts_log4j.xml">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="YES_NEFT_OUTWARD_GATEWAY" bundleName="com/cedge/yes/neft/out/YES_NEFT_OUTWARD_GATEWAY" pluginId="YES_NEFT_OUTWARD"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/YES_NEFT_OUTWARD/icons/full/obj16/YES_NEFT_OUTWARD_GATEWAY.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/YES_NEFT_OUTWARD/icons/full/obj30/YES_NEFT_OUTWARD_GATEWAY.gif"/>
+    <composition>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="256,31" computeExpression="esql://routine/com.cedge.yes.neft.out#NEFT_OUTWARD_GATEWAY.Main">
+        <translation xmi:type="utility:ConstantString" string="ADD_MQRFH"/>
+        <longDescription xmi:type="utility:ConstantString" string="This Compute node will add the MQRFH2 Header to the Message. Input file name will be stored in 'MQRFH2.usr.filename' field."/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="542,37" queueName="YES.NEFT.OUT.MIRROR" transactionMode="no">
+        <translation xmi:type="utility:ConstantString" string="YES.NEFT.OUT.MIRROR"/>
+        <shortDescription xmi:type="utility:ConstantString" string="This node is configured to write the messages to the Queue &quot;KBL.NEFT.OUT.MIRROR&quot;."/>
+        <longDescription xmi:type="utility:ConstantString" string="This node is used to store one copy of input message in &quot;KBL.NEFT.OUT.COPY&quot; queue, for future use. Message will be copied into this Queue in all the scenarios."/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="222,209" computeExpression="esql://routine/com.cedge.yes.neft.out#NEFT_OUTWARD_GATEWAY.Main">
+        <translation xmi:type="utility:ConstantString" string="ADD_MQRFH2_FAILURE"/>
+        <longDescription xmi:type="utility:ConstantString" string="This Compute node will add the MQRFH2 Header to the Message. Input file name will be stored in 'MQRFH2.usr.filename' field."/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_11" location="366,37" queueName="YES.NEFT.OUT.GATEWAY" transactionMode="no" validateMaster="none">
+        <translation xmi:type="utility:ConstantString" string="YES.NEFT.OUT.GATEWAY"/>
+        <shortDescription xmi:type="utility:ConstantString" string="This node is configured to write the messages to the Queue &quot;KBL.NEFT.OUT.GATEWAY&quot;."/>
+        <longDescription xmi:type="utility:ConstantString" string="If we receive the correct message from the file, we writes the message to &quot;KBL.NEFT.OUT.GATEWAY&quot; queue. From this Queue 'KBL_NEFT_OUTWARD.msgflow' will pick the message and process it."/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_13" location="438,212" queueName="YES.NEFT.OUT.PARSE.FAIL" transactionMode="no">
+        <translation xmi:type="utility:ConstantString" string="YES.NEFT.OUT.PARSE.FAIL"/>
+        <shortDescription xmi:type="utility:ConstantString" string="This node is configured to write the messages to the Queue &quot;KBL.NEFT.OUT.PARSE.FAIL&quot;."/>
+        <longDescription xmi:type="utility:ConstantString" string="This node is used to store one copy of input message into &quot;KBL.NEFT.OUT.PARSE.FAIL&quot; queue, in case of any failure in message parsing."/>
+      </nodes>
+      <nodes xmi:type="com_yes_neft_out_exception_EXCEPTION_HANDLING_SUBFLOW.subflow:FCMComposite_1" xmi:id="FCMComposite_1_2" location="719,117">
+        <translation xmi:type="utility:ConstantString" string="EXCEPTION_HANDLING_SUBFLOW"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_16" location="34,17" queueName="CBS143.TO.IIBYES.NEFT.OUT" messageDomainProperty="DFDL" messageTypeProperty="{}:Generic_Message">
+        <translation xmi:type="utility:ConstantString" string="CBS143.TO.IIBYES.NEFT.OUT"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="32,79" queueName="CBS144.TO.IIBYES.NEFT.OUT" messageDomainProperty="DFDL" messageTypeProperty="{}:Generic_Message">
+        <translation xmi:type="utility:ConstantString" string="CBS144.TO.IIBYES.NEFT.OUT"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="36,142" queueName="CBS170.TO.IIBYES.NEFT.OUT" messageDomainProperty="DFDL" messageTypeProperty="{}:Generic_Message">
+        <translation xmi:type="utility:ConstantString" string="CBS170.TO.IIBYES.NEFT.OUT"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="34,212" queueName="CBS174.TO.IIBYES.NEFT.OUT" messageDomainProperty="DFDL" messageTypeProperty="{}:Generic_Message">
+        <translation xmi:type="utility:ConstantString" string="CBS174.TO.IIBYES.NEFT.OUT"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_11" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_11" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_10" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_12" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_14" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_11" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_15" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_27" targetNode="FCMComposite_1_8" sourceNode="FCMComposite_1_16" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_8" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_8" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_9" targetNode="FCMComposite_1_8" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_16" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_16" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_17" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_13" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_13" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.LogPath">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.LogPath" bundleName="com/cedge/yes/neft/out/YES_NEFT_OUTWARD_GATEWAY" pluginId="YES_NEFT_OUTWARD"/>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>
